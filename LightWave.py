@@ -5,7 +5,7 @@ from twython import TwythonStreamer
 
 
 # Set the GPIO Channel
-LED=11
+LED=2
 
 # Load our keys
 twitter_key_file=open('tweetkey.json')

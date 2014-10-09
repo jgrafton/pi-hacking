@@ -1,12 +1,24 @@
 import time
+import json
 import RPi.GPIO as GPIO
 from twython import TwythonStreamer
+import random
+
 
 # Search terms
 TERMS = '#ebola'
 
 # GPIO pin number of LED
-LED = 11
+RED=4
+YELLOW=2
+GREEN=3
+
+def random_light():
+	light = random.randint(2,5)
+	GPIO.output(light, GPIO.HIGH)
+	time.sleep(0.75)
+	GPIO.output(light, GPIO.LOW)
+
 
 # Load our keys
 twitter_key_file=open('tweetkey.json')
@@ -21,17 +33,19 @@ OAUTH_TOKEN_SECRET = twitter_keys['OAUTH_TOKEN_SECRET']
 # Setup callbacks from Twython Streamer
 class BlinkyStreamer(TwythonStreamer):
         def on_success(self, data):
-                if 'text' in data:
-                        print data['text'].encode('utf-8')
-                        print
-                        GPIO.output(LED, GPIO.HIGH)
-                        time.sleep(0.5)
-                        GPIO.output(LED, GPIO.LOW)
-
+		try:
+        		print data['text'].encode('utf-8')
+                        random_light()
+		except:
+			pass
 # Setup GPIO as output
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(LED, GPIO.OUT)
-GPIO.output(LED, GPIO.LOW)
+GPIO.setup(RED, GPIO.OUT)
+GPIO.output(RED, GPIO.LOW)
+GPIO.setup(YELLOW, GPIO.OUT)
+GPIO.output(YELLOW, GPIO.LOW)
+GPIO.setup(GREEN, GPIO.OUT)
+GPIO.output(GREEN, GPIO.LOW)
 
 # Create streamer
 try:
