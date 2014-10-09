@@ -8,11 +8,15 @@ TERMS = '#ebola'
 # GPIO pin number of LED
 LED = 11
 
+# Load our keys
+twitter_key_file=open('tweetkey.json')
+twitter_keys = json.load(twitter_key_file)
+
 # Twitter application authentication
-APP_KEY = 'WzpVxGq7GkBbhuFOHnhMxVtDZ'
-APP_SECRET = 'emO0CQkB7sNAX4XSfMuf8DuLFMBp7viecLewy3OG8K2EMHmgY2'
-OAUTH_TOKEN = '648983-weByKvXtqd9UMVcdPI41GANrV91vIW3miOd4GHBUFku'
-OAUTH_TOKEN_SECRET = 'HbH3WEG4bsqo8qs0pcOboSCu6uHV0Jf8PibefaSHLmdoQ'
+APP_KEY = twitter_keys['APP_KEY']
+APP_SECRET = twitter_keys['APP_SECRET']
+OAUTH_TOKEN = twitter_keys['OAUTH_TOKEN']
+OAUTH_TOKEN_SECRET = twitter_keys['OAUTH_TOKEN_SECRET']
 
 # Setup callbacks from Twython Streamer
 class BlinkyStreamer(TwythonStreamer):
