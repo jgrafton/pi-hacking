@@ -27,6 +27,12 @@ def collect_command_args():
 # The actual RUN block for the whole script.
 if __name__ == '__main__':
 
+    # Collect the commandline arguments and print usage if necessary
+    parser = collect_command_args()
+    (options, args) = parser.parse_args()
+
+    print options.red
+
     # Load our keys
     twitter_key_file = open('tweetkey.json')
     twitter_keys = json.load(twitter_key_file)
@@ -37,22 +43,22 @@ if __name__ == '__main__':
     OAUTH_TOKEN = twitter_keys['OAUTH_TOKEN']
     OAUTH_TOKEN_SECRET = twitter_keys['OAUTH_TOKEN_SECRET']
 
-    #Create the twitter object with our authentication
+    # Create the twitter object with our authentication
     twitter = Twython(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
 
     # Posting here for debug use only
-    green_value = 1
-    yellow_value = 0
-    red_value = 0
+    # green_value = 1
+    # yellow_value = 0
+    # red_value = 0
 
     epoc_time = int(datetime.datetime.now().strftime("%s"))
-    payload = {"green": green_value, "yellow": yellow_value, "red": red_value, "timestamp": epoc_time}
+    payload = {"green": options.green, "yellow": options.yellow, "red": options.red, "timestamp": epoc_time}
 
     print json.dumps(payload)
 
     # Create tweet post
     try:
-        #twitter.verify_credentials()
+        # twitter.verify_credentials()
         twitter.update_status(status=json.dumps(payload))
     except KeyboardInterrupt:
         pass
