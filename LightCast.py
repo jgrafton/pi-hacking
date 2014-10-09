@@ -1,12 +1,9 @@
 import time
+import datetime
 import json
 from pprint import pprint
-import RPi.GPIO as GPIO
-from twython import TwythonStreamer
+from twython import Twython
 
-
-# Set the GPIO Channel
-LED=11
 
 # Load our keys
 twitter_key_file=open('tweetkey.json')
@@ -18,29 +15,28 @@ APP_SECRET = twitter_keys['APP_SECRET']
 OAUTH_TOKEN = twitter_keys['OAUTH_TOKEN']
 OAUTH_TOKEN_SECRET = twitter_keys['OAUTH_TOKEN_SECRET']
 
-class MyStreamer(TwythonStreamer):
-    def on_success(self, data):
-        if 'text' in data:
-            print data['text'].encode('utf-8')
-            GPIO.output(LED, GPIO.HIGH)
-            time.sleep(1.0)
-            GPIO.output(LED, GPIO.LOW)
-        # Want to disconnect after the first result?
-        # self.disconnect()
+twitter = Twython(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
+auth = twitter.get_authentication_tokens()
+OAUTH_TOKEN = auth['oauth_token']
+OAUTH_TOKEN_SECRET = auth['oauth_token_secret']
 
-    def on_error(self, status_code, data):
-        print status_code, data
+# Posting here for debug use only
+green_value = 1
+yellow_value = 0
+red_value = 0
 
-# Setup GPIO as output
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(LED, GPIO.OUT)
-GPIO.output(LED, GPIO.LOW)
+epoc_time = int(datetime.datetime.now().strftime("%s"))
+payload={"green":green_value,"yellow":yellow_value,"red":red_value,"timestamp":epoc_time }
 
-# Create streamer
+print json.dumps(payload)
+
+# Create tweet post
 try:
-    stream = MyStreamer(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
-    stream.user()
+    #twitter.verify_credentials()
+    twitter.update_status(status='twython is great')
 except KeyboardInterrupt:
-    GPIO.cleanup()
+    pass
+
+
 
 
