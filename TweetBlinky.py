@@ -9,10 +9,10 @@ TERMS = '#ebola'
 LED = 11
 
 # Twitter application authentication
-APP_KEY = 'WzpVxGq7GkBbhuFOHnhMxVtDZ'
-APP_SECRET = 'emO0CQkB7sNAX4XSfMuf8DuLFMBp7viecLewy3OG8K2EMHmgY2'
-OAUTH_TOKEN = '648983-weByKvXtqd9UMVcdPI41GANrV91vIW3miOd4GHBUFku'
-OAUTH_TOKEN_SECRET = 'HbH3WEG4bsqo8qs0pcOboSCu6uHV0Jf8PibefaSHLmdoQ'
+APP_KEY = 'IIzoyEXAvLcNAR3OxK65dKqZm'
+APP_SECRET = 'gm9do0neFtsQ8Iv8WVoLJE6duSJG5zdXvCfoKM7QOJcgVhP939'
+OAUTH_TOKEN = '2840648905-q74EAyJoo5Q3racONYCx7QXGrFvQUMvz22phNSw'
+OAUTH_TOKEN_SECRET = 'fbKmrRW9azsa5Do1mtRLjWRD36DSnyDEJapiQTCzEzuYd'
 
 # Setup callbacks from Twython Streamer
 class BlinkyStreamer(TwythonStreamer):

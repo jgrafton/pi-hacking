@@ -1,4 +1,5 @@
 import time
+import json
 import RPi.GPIO as GPIO
 from twython import TwythonStreamer
 
@@ -7,21 +8,24 @@ from twython import TwythonStreamer
 LED=11
 
 # Twitter application authentication
-APP_KEY = 'WzpVxGq7GkBbhuFOHnhMxVtDZ'
-APP_SECRET = 'emO0CQkB7sNAX4XSfMuf8DuLFMBp7viecLewy3OG8K2EMHmgY2'
-OAUTH_TOKEN = '648983-weByKvXtqd9UMVcdPI41GANrV91vIW3miOd4GHBUFku'
-OAUTH_TOKEN_SECRET = 'HbH3WEG4bsqo8qs0pcOboSCu6uHV0Jf8PibefaSHLmdoQ'
+APP_KEY = 'IIzoyEXAvLcNAR3OxK65dKqZm'
+APP_SECRET = 'gm9do0neFtsQ8Iv8WVoLJE6duSJG5zdXvCfoKM7QOJcgVhP939'
+OAUTH_TOKEN = '2840648905-q74EAyJoo5Q3racONYCx7QXGrFvQUMvz22phNSw'
+OAUTH_TOKEN_SECRET = 'fbKmrRW9azsa5Do1mtRLjWRD36DSnyDEJapiQTCzEzuYd'
+
 
 class MyStreamer(TwythonStreamer):
     def on_success(self, data):
         if 'text' in data:
-            print data['text'].encode('utf-8')
-            GPIO.output(LED, GPIO.HIGH)
-            time.sleep(1.0)
-            GPIO.output(LED, GPIO.LOW)
-        # Want to disconnect after the first result?
-        # self.disconnect()
-
+            try:
+                payload = json.loads(data['text']) 
+                print payload
+                #GPIO.output(LED, GPIO.HIGH)
+                #time.sleep(1.0)
+                #GPIO.output(LED, GPIO.LOW)
+	    except:
+                print "ignoring tweet"
+           
     def on_error(self, status_code, data):
         print status_code, data
 
