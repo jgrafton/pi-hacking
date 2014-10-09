@@ -16,9 +16,8 @@ OAUTH_TOKEN = twitter_keys['OAUTH_TOKEN']
 OAUTH_TOKEN_SECRET = twitter_keys['OAUTH_TOKEN_SECRET']
 
 twitter = Twython(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
-auth = twitter.get_authentication_tokens()
-OAUTH_TOKEN = auth['oauth_token']
-OAUTH_TOKEN_SECRET = auth['oauth_token_secret']
+
+# TODO:  Capture the light values from CLI.
 
 # Posting here for debug use only
 green_value = 1
@@ -33,7 +32,7 @@ print json.dumps(payload)
 # Create tweet post
 try:
     #twitter.verify_credentials()
-    twitter.update_status(status='twython is great')
+    twitter.update_status(status=json.dumps(payload))
 except KeyboardInterrupt:
     pass
 
