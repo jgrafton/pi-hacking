@@ -3,7 +3,7 @@ import RPi.GPIO as GPIO
 from twython import TwythonStreamer
 
 # Search terms
-TERMS = '#yes'
+TERMS = '#ebola'
 
 # GPIO pin number of LED
 LED = 11
@@ -25,7 +25,7 @@ class BlinkyStreamer(TwythonStreamer):
                         GPIO.output(LED, GPIO.LOW)
 
 # Setup GPIO as output
-GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(GPIO.BCM)
 GPIO.setup(LED, GPIO.OUT)
 GPIO.output(LED, GPIO.LOW)
 
