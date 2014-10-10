@@ -1,12 +1,12 @@
-#!/usr/bin/env python
-
+#!/usr/bin/python
+import time
 import json
 import RPi.GPIO as GPIO
 from twython import TwythonStreamer
 
 
 # GPIO pin number of LED
-LEDS = [{"RED": 4, "YELLOW": 2, "GREEN": 3}]
+LEDS = {'RED': 4, 'YELLOW': 2, 'GREEN': 3}
 
 
 # Load our keys
@@ -21,10 +21,13 @@ OAUTH_TOKEN_SECRET = twitter_keys['OAUTH_TOKEN_SECRET']
 
 
 def toggle_light(light, state):
-    if state == "ON":
-        GPIO.output(light, GPIO.HIGH)
-    else:
-        GPIO.output(light, GPIO.LOW)
+    if light in LEDS:
+        if state == 1:
+            GPIO.output(LEDS[light], GPIO.HIGH)
+        elif state == 0:
+            GPIO.output(LEDS[light], GPIO.LOW)
+        else:
+            pass
 
 
 class MyStreamer(TwythonStreamer):
@@ -32,11 +35,11 @@ class MyStreamer(TwythonStreamer):
         if 'text' in data:
             try:
                 payload = json.loads(data['text'])
-                print payload["RED"]
-                print payload["YELLOW"]
-                print payload["GREEN"]
-            except:
-                print "ignoring tweet"
+                print payload
+                for key, value in payload:
+                    toggle_light(key, value)
+            except Exception:
+                print "ignoring tweet: " + data['text']
 
     def on_error(self, status_code, data):
         print status_code, data
@@ -52,7 +55,13 @@ GPIO.output(LEDS["GREEN"], GPIO.LOW)
 
 # Create streamer
 try:
+    for key, value in LEDS:
+        print "Initilizing light %s", key
+        toggle_light(key, 1)
+        time.sleep(1)
+        toggle_light(key, 0)
     stream = MyStreamer(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
     stream.user()
-except KeyboardInterrupt:
+except:
+    print "Exiting..."
     GPIO.cleanup()
