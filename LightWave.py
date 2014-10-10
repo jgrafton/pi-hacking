@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import json
 import RPi.GPIO as GPIO
 from twython import TwythonStreamer

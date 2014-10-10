@@ -9,19 +9,20 @@ import random
 TERMS = '#ebola'
 
 # GPIO pin number of LED
-RED=4
-YELLOW=2
-GREEN=3
+RED = 4
+YELLOW = 2
+GREEN = 3
+
 
 def random_light():
-	light = random.randint(2,5)
-	GPIO.output(light, GPIO.HIGH)
-	time.sleep(0.75)
-	GPIO.output(light, GPIO.LOW)
+    light = random.randint(2, 4)
+    GPIO.output(light, GPIO.HIGH)
+    time.sleep(0.75)
+    GPIO.output(light, GPIO.LOW)
 
 
 # Load our keys
-twitter_key_file=open('tweetkey.json')
+twitter_key_file = open('tweetkey.json')
 twitter_keys = json.load(twitter_key_file)
 
 # Twitter application authentication
@@ -30,15 +31,17 @@ APP_SECRET = twitter_keys['APP_SECRET']
 OAUTH_TOKEN = twitter_keys['OAUTH_TOKEN']
 OAUTH_TOKEN_SECRET = twitter_keys['OAUTH_TOKEN_SECRET']
 
-# Setup callbacks from Twython Streamer
+
 class BlinkyStreamer(TwythonStreamer):
-        def on_success(self, data):
-		try:
-        		print data['text'].encode('utf-8')
-                        random_light()
-		except:
-			pass
-# Setup GPIO as output
+    # Setup callbacks from Twython Streamer
+    def on_success(self, data):
+        try:
+            print data['text'].encode('utf-8')
+            random_light()
+        except:
+            pass
+
+# Setup each light GPIO as output
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(RED, GPIO.OUT)
 GPIO.output(RED, GPIO.LOW)
