@@ -43,12 +43,12 @@ class BlinkyStreamer(TwythonStreamer):
 
 # Setup each light GPIO as output
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(RED, GPIO.OUT)
-GPIO.output(RED, GPIO.LOW)
-GPIO.setup(YELLOW, GPIO.OUT)
-GPIO.output(YELLOW, GPIO.LOW)
-GPIO.setup(GREEN, GPIO.OUT)
-GPIO.output(GREEN, GPIO.LOW)
+GPIO.setup(LEDS["RED"], GPIO.OUT)
+GPIO.output(LEDS["RED"], GPIO.LOW)
+GPIO.setup(LEDS["YELLOW"], GPIO.OUT)
+GPIO.output(LEDS["YELLOW"], GPIO.LOW)
+GPIO.setup(LEDS["GREEN"], GPIO.OUT)
+GPIO.output(LEDS["GREEN"], GPIO.LOW)
 
 # Create streamer
 try:
