@@ -40,6 +40,7 @@ class MyStreamer(TwythonStreamer):
     def on_error(self, status_code, data):
         print status_code, data
 
+
 # Load our keys
 twitter_key_file = open('tweetkey.json')
 twitter_keys = json.load(twitter_key_file)
@@ -67,4 +68,3 @@ try:
 except:
     print "Exiting..."
     GPIO.cleanup()
-

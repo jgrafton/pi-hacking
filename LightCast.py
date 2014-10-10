@@ -31,8 +31,6 @@ if __name__ == '__main__':
     parser = collect_command_args()
     (options, args) = parser.parse_args()
 
-    print options.red
-
     # Load our keys
     twitter_key_file = open('tweetkey.json')
     twitter_keys = json.load(twitter_key_file)
@@ -46,13 +44,8 @@ if __name__ == '__main__':
     # Create the twitter object with our authentication
     twitter = Twython(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
 
-    # Posting here for debug use only
-    # green_value = 1
-    # yellow_value = 0
-    # red_value = 0
-
     epoc_time = int(datetime.datetime.now().strftime("%s"))
-    payload = {"green": options.green, "yellow": options.yellow, "red": options.red, "timestamp": epoc_time}
+    payload = {"GREEN": options.green, "YELLOW": options.yellow, "RED": options.red, "timestamp": epoc_time}
 
     print json.dumps(payload)
 
