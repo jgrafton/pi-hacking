@@ -22,7 +22,7 @@ def toggle_light(light, state):
         elif int(state) == 0:
             GPIO.output(LEDS[light], GPIO.LOW)
         else:
-	    print "Debug: unknown state found: " + state
+            print "Debug: unknown state found: " + state
 
 
 class MyStreamer(TwythonStreamer):
@@ -32,8 +32,8 @@ class MyStreamer(TwythonStreamer):
                 payload = json.loads(data['text'].encode('utf-8'))
                 print payload
                 for key, value in payload.iteritems():
-		    print "Payload info: "+ key, value
-		    toggle_light(key, value)
+                    print "Payload info: " + key, value
+                    toggle_light(key, value)
             except Exception:
                 print "ignoring tweet: " + payload
 
